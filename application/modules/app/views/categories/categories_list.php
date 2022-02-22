@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="float-right page-breadcrumb">
-            <ol class="breadcrumb">
+        <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo base_url() ?>app">Home</a></li>
                 <li class="breadcrumb-item active"><?php echo ucfirst($this->uri->segment(2)) ?></li>
             </ol>
@@ -56,9 +56,8 @@
                                 <td><?php echo $categories->description ?></td>
                                 <td style="text-align:center" width="200px">
                                     <?php
-                                    echo anchor(site_url('app/categories/update/' . $categories->id), 'Update');
-                                    echo ' | ';
-                                    echo anchor(site_url('app/categories/delete/' . $categories->id), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+                                    echo $this->myacl->_btnUpdate(site_url('app/categories/update/'), $categories->id, 'Update');
+                                    echo $this->myacl->_btnDelete(site_url('app/categories/delete/' ), $categories->id, 'Delete');
                                     ?>
                                 </td>
                             </tr>
