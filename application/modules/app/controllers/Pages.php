@@ -101,6 +101,8 @@ class Pages extends MY_Controller {
             if (!empty($_FILES['postimage'])) {
                 $result = fileuploader($_FILES, "postimage", "", "gif|jpg|jpeg|png|");
                 if ($result['status'] == "success") {
+                    $this->load->helper('imagefile');
+                    imagefile($result['message']);
                     $data = array(
                         'filename' => $result['message']['filename'],
                         'filepath' => $result['message']['filepath'],
@@ -173,6 +175,8 @@ class Pages extends MY_Controller {
 
                 $result = fileuploader($_FILES, "postimage", "", "gif|jpg|jpeg|png|");
                 if ($result['status'] == "success") {
+                    $this->load->helper('imagefile');
+                    imagefile($result['message']);
                     $data = array(
                         'filename' => $result['message']['filename'],
                         'filepath' => $result['message']['filepath'],
