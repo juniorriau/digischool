@@ -32,7 +32,10 @@
                     <div class="form-group">
                         <label for="varchar">Page Image <?php echo form_error('postimage') ?></label>
                         <?php if (!empty($postimage)) { ?>
-                            <img width="300px" class="img-responsive img-thumbnail" src="<?php echo site_url($postimage) ?>"/>
+                            <a class="image-popup-vertical-fit" href="<?php echo site_url($postimage) ?>" title="<?php echo $title; ?>">
+
+                                <img src="<?php echo site_url($postimage) ?>" class="img img-thumbnail d-block mo-mb-2" style="max-height: 250px;width: auto;" alt=""/>
+                            </a>
                         <?php } ?>
                         <input type="file" class="form-control" name="postimage" id="postimage" placeholder="Postimage" value="<?php echo $postimage; ?>" />
                     </div>

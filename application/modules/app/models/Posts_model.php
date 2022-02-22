@@ -8,7 +8,8 @@ class Posts_model extends CI_Model
 
     public $table = 'posts';
     public $id = 'id';
-    public $order = 'DESC';
+    public $order = 'ASC';
+    public $type = 'post';
 
     function __construct()
     {
@@ -18,6 +19,7 @@ class Posts_model extends CI_Model
     // get all
     function get_all()
     {
+        $this->db->where('type', $this->type);
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
@@ -25,53 +27,76 @@ class Posts_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
+        $this->db->where('type', $this->type);
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
+    //get data by slug
+    function get_by_slug($type, $slug)
+    {
+        $this->db->where('type', $type);
+        $this->db->where('slug', $slug);
+        return $this->db->get($this->table)->row();
+    }
+
     // get total rows
-    function total_rows($q = NULL) {
-        $this->db->like('id', $q);
-	$this->db->or_like('guuid', $q);
-	$this->db->or_like('title', $q);
-	$this->db->or_like('slug', $q);
-	$this->db->or_like('content', $q);
-	$this->db->or_like('categoryid', $q);
-	$this->db->or_like('postimage', $q);
-	$this->db->or_like('type', $q);
-	$this->db->or_like('metapost', $q);
-	$this->db->or_like('keywords', $q);
-	$this->db->or_like('commentstatus', $q);
-	$this->db->or_like('poststatus', $q);
-	$this->db->or_like('createdat', $q);
-	$this->db->or_like('createdby', $q);
-	$this->db->or_like('updatedat', $q);
-	$this->db->or_like('updatedby', $q);
-	$this->db->from($this->table);
+    function total_rows($q = NULL)
+    {
+        $this->db->select('p.*, c.category');
+        $this->db->from('posts p');
+        $this->db->join('categories c', 'c.id=p.categoryid', 'left');
+        $this->db->where('p.type', $this->type);
+        $this->db->order_by($this->id, $this->order);
+        $this->db->group_start();
+        $this->db->like('p.id', $q);
+        $this->db->or_like('p.guuid', $q);
+        $this->db->or_like('p.title', $q);
+        $this->db->or_like('p.categoryid', $q);
+        $this->db->or_like('p.content', $q);
+        $this->db->or_like('p.postimage', $q);
+        $this->db->or_like('p.type', $q);
+        $this->db->or_like('p.metapost', $q);
+        $this->db->or_like('p.keywords', $q);
+        $this->db->or_like('p.commentstatus', $q);
+        $this->db->or_like('p.poststatus', $q);
+        $this->db->or_like('p.createdat', $q);
+        $this->db->or_like('p.createdby', $q);
+        $this->db->or_like('p.updatedat', $q);
+        $this->db->or_like('p.updatedby', $q);
+        $this->db->or_like('c.category', $q);
+        $this->db->group_end();
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->select('p.*, c.category');
+        $this->db->from('posts p');
+        $this->db->join('categories c', 'c.id=p.categoryid', 'left');
+        $this->db->where('p.type', $this->type);
         $this->db->order_by($this->id, $this->order);
-        $this->db->like('id', $q);
-	$this->db->or_like('guuid', $q);
-	$this->db->or_like('title', $q);
-	$this->db->or_like('slug', $q);
-	$this->db->or_like('content', $q);
-	$this->db->or_like('categoryid', $q);
-	$this->db->or_like('postimage', $q);
-	$this->db->or_like('type', $q);
-	$this->db->or_like('metapost', $q);
-	$this->db->or_like('keywords', $q);
-	$this->db->or_like('commentstatus', $q);
-	$this->db->or_like('poststatus', $q);
-	$this->db->or_like('createdat', $q);
-	$this->db->or_like('createdby', $q);
-	$this->db->or_like('updatedat', $q);
-	$this->db->or_like('updatedby', $q);
-	$this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
+        $this->db->group_start();
+        $this->db->like('p.id', $q);
+        $this->db->or_like('p.guuid', $q);
+        $this->db->or_like('p.title', $q);
+        $this->db->or_like('p.categoryid', $q);
+        $this->db->or_like('p.content', $q);
+        $this->db->or_like('p.postimage', $q);
+        $this->db->or_like('p.type', $q);
+        $this->db->or_like('p.metapost', $q);
+        $this->db->or_like('p.keywords', $q);
+        $this->db->or_like('p.commentstatus', $q);
+        $this->db->or_like('p.poststatus', $q);
+        $this->db->or_like('p.createdat', $q);
+        $this->db->or_like('p.createdby', $q);
+        $this->db->or_like('p.updatedat', $q);
+        $this->db->or_like('p.updatedby', $q);
+        $this->db->or_like('c.category', $q);
+        $this->db->group_end();
+        $this->db->limit($limit, $start);
+        return $this->db->get()->result();
     }
 
     // insert data
@@ -84,6 +109,7 @@ class Posts_model extends CI_Model
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
+        $this->db->where('type', $this->type);
         $this->db->update($this->table, $data);
     }
 
@@ -91,6 +117,7 @@ class Posts_model extends CI_Model
     function delete($id)
     {
         $this->db->where($this->id, $id);
+        $this->db->where('type', $this->type);
         $this->db->delete($this->table);
     }
 
@@ -99,5 +126,5 @@ class Posts_model extends CI_Model
 /* End of file Posts_model.php */
 /* Location: ./application/models/Posts_model.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2022-02-22 06:11:03 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2020-06-21 12:45:37 */
 /* http://harviacode.com */

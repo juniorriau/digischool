@@ -32,15 +32,18 @@
                         <label for="title">Category <?php echo form_error('categoryid') ?></label>
                         <select name="categoryid" id="categoryid" class="form-control">
                             <option value="0">-Choose Category</option>
-                            <?php foreach ($categorylist as $c) { ?>
+                            <?php foreach ($category as $c) { ?>
                                 <option value="<?php echo $c->id ?>" <?php echo $categoryid == $c->id ? 'selected' : '' ?>><?php echo $c->category ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="varchar">Post Image <?php echo form_error('postimage') ?></label>
-                        <?php if (!empty($postimage)) { ?>
-                            <img width="300px" class="img-responsive img-thumbnail" src="<?php echo site_url($postimage) ?>"/>
+                         <?php if (!empty($postimage)) { ?>
+                            <a class="image-popup-vertical-fit" href="<?php echo site_url($postimage) ?>" title="<?php echo $title; ?>">
+
+                                <img src="<?php echo site_url($postimage) ?>" class="img img-thumbnail d-block mo-mb-2" style="max-height: 250px;width: auto;" alt=""/>
+                            </a>
                         <?php } ?>
                         <input type="file" name="postimage" id="postimage" class="form-control" <?php echo $this->uri->segment(2) == "update" ? 'required' : '' ?>/>
                     </div>
