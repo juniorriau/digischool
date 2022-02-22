@@ -86,7 +86,7 @@ class Pages extends MY_Controller {
             'keywords' => set_value('keywords'),
             'poststatus' => set_value('poststatus'),
             'template' => 'pages/pages_form',
-            'extrajs' => 'pages/pages_js_ckeditor',
+            'extrajs' => 'pages/pages_extrajs',
             'session' => $this->sess,
         );
         $this->load->view('base/content', $data);
@@ -154,7 +154,7 @@ class Pages extends MY_Controller {
                 'keywords' => set_value('keywords', $row->keywords),
                 'poststatus' => set_value('poststatus', $row->poststatus),
                 'template' => 'pages/pages_form',
-                'extrajs' => 'pages/pages_js_ckeditor',
+                'extrajs' => 'pages/pages_extrajs',
                 'session' => $this->sess,
             );
             $this->load->view('base/content', $data);
