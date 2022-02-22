@@ -60,8 +60,8 @@
 			<td><?php echo $students->nisn ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
-				echo $this->myacl->_btnUpdate(site_url('students/update'),$students->id,'Update'); 
-				echo $this->myacl->_btnDelete(site_url('students/delete'),$students->id,'Delete'); 
+				echo $this->myacl->_btnUpdate(site_url('app/students/update'),$students->id,'Update'); 
+				echo $this->myacl->_btnDelete(site_url('app/students/delete'),$students->id,'Delete'); 
 				?>
 			</td>
 		</tr>
