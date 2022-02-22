@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table table-responsive">
+                <div class="table table-responsive"> 
         <table class="table table-bordered" style="margin-bottom: 10px">
             <tr>
                 <th>No</th>

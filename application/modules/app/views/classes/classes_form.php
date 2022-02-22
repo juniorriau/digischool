@@ -30,7 +30,7 @@
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                     <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                    <a href="<?php echo site_url('app/categories') ?>" class="btn btn-warning">Cancel</a>
+                    <a href="<?php echo site_url('app/classes') ?>" class="btn btn-warning">Cancel</a>
                 </div>
             </form>
         </div>
