@@ -32,14 +32,21 @@ class Students_model extends CI_Model
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->like('id', $q);
-        $this->db->or_like('classid', $q);
-        $this->db->or_like('name', $q);
-        $this->db->or_like('nisn', $q);
-        $this->db->or_like('createdby', $q);
-        $this->db->or_like('createdat', $q);
-        $this->db->or_like('updatedby', $q);
-        $this->db->or_like('updatedat', $q);
+        $this->db->select('s.*, c.classname');
+        $this->db->from('students s');
+        $this->db->join('classes c', 'c.id=s.classid', 'left');
+        $this->db->order_by('s.id', $this->order);
+        $this->db->group_start();
+        $this->db->like('s.id', $q);
+        $this->db->or_like('s.classid', $q);
+        $this->db->or_like('s.name', $q);
+        $this->db->or_like('s.nisn', $q);
+        $this->db->or_like('s.createdby', $q);
+        $this->db->or_like('s.createdat', $q);
+        $this->db->or_like('s.updatedby', $q);
+        $this->db->or_like('s.updatedat', $q);
+        $this->db->or_like('c.classname', $q);
+        $this->db->group_end();
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }

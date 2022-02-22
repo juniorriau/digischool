@@ -32,17 +32,23 @@ class Files_model extends CI_Model
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->like('id', $q);
-        $this->db->or_like('file_title', $q);
-        $this->db->or_like('enrolledto', $q);
-        $this->db->or_like('file_name', $q);
-        $this->db->or_like('file_path', $q);
-        $this->db->or_like('full_path', $q);
-        $this->db->or_like('createdby', $q);
-        $this->db->or_like('createdat', $q);
-        $this->db->or_like('updatedby', $q);
-        $this->db->or_like('updatedat', $q);
-        $this->db->from($this->table);
+        $this->db->select('f.*, c.classname');
+        $this->db->from('files f');
+        $this->db->join('classes c', 'c.id=f.enrolledto');
+        $this->db->order_by('f.id', $this->order);
+        $this->db->group_start();
+        $this->db->like('f.id', $q);
+        $this->db->or_like('f.file_title', $q);
+        $this->db->or_like('f.enrolledto', $q);
+        $this->db->or_like('f.file_name', $q);
+        $this->db->or_like('f.file_path', $q);
+        $this->db->or_like('f.full_path', $q);
+        $this->db->or_like('f.createdby', $q);
+        $this->db->or_like('f.createdat', $q);
+        $this->db->or_like('f.updatedby', $q);
+        $this->db->or_like('f.updatedat', $q);
+        $this->db->or_like('c.classname', $q);
+        $this->db->group_end();
         return $this->db->count_all_results();
     }
 
@@ -67,7 +73,7 @@ class Files_model extends CI_Model
         $this->db->or_like('c.classname', $q);
         $this->db->group_end();
         $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
+        return $this->db->get()->result();
     }
 
     // insert data
