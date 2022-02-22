@@ -15,7 +15,7 @@
             <div class="card-header ">
                 <div class="row">
                     <div class="col-3">
-                        <?php echo anchor(site_url('app/comments/create'), 'Create', 'class="btn btn-primary"'); ?>
+                        
                     </div>
                     <div class="col-lg-6">
                         <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
