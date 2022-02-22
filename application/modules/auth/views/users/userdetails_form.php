@@ -52,7 +52,7 @@
                             <input type="hidden" name="userid" value="<?php echo $userid; ?>" />
                             <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                             <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-                            <a href="<?php echo site_url('auth/home') ?>" class="btn btn-danger">Go to Home</a>
+                            <a href="<?php echo site_url('app/home') ?>" class="btn btn-danger">Go to Home</a>
                         </div>
                     </div>
                 </div>
