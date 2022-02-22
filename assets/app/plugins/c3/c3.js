@@ -1049,7 +1049,7 @@
             data_type: undefined,
             data_types: {},
             data_labels: {},
-            data_order: 'ASC',
+            data_order: 'desc',
             data_regions: {},
             data_color: undefined,
             data_colors: {},
@@ -1785,7 +1785,7 @@
     };
     c3_chart_internal_fn.isOrderDesc = function () {
         var config = this.config;
-        return typeof(config.data_order) === 'string' && config.data_order.toLowerCase() === 'ASC';
+        return typeof(config.data_order) === 'string' && config.data_order.toLowerCase() === 'desc';
     };
     c3_chart_internal_fn.isOrderAsc = function () {
         var config = this.config;
