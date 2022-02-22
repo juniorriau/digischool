@@ -25,43 +25,57 @@ class Comments_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        $this->db->select('c.*, p.title');
+        $this->db->from('comments c');
+        $this->db->join('posts p', 'p.id=c.postid', 'left');
+        $this->db->where('c.id', $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
-    function total_rows($q = NULL) {
-        $this->db->like('id', $q);
-	$this->db->or_like('postid', $q);
-	$this->db->or_like('comment', $q);
-	$this->db->or_like('authorname', $q);
-	$this->db->or_like('authoremail', $q);
-	$this->db->or_like('authorip', $q);
-	$this->db->or_like('approved', $q);
-	$this->db->or_like('createdat', $q);
-	$this->db->or_like('createdby', $q);
-	$this->db->or_like('updatedat', $q);
-	$this->db->or_like('updatedby', $q);
-	$this->db->from($this->table);
+    function total_rows($q = NULL)
+    {
+        $this->db->select('c.*, p.title');
+        $this->db->from('comments c');
+        $this->db->join('posts p', 'p.id=c.postid', 'left');
+        $this->db->group_start();
+        $this->db->like('c.id', $q);
+        $this->db->or_like('c.postid', $q);
+        $this->db->or_like('c.comment', $q);
+        $this->db->or_like('c.authorname', $q);
+        $this->db->or_like('c.authoremail', $q);
+        $this->db->or_like('c.authorip', $q);
+        $this->db->or_like('c.approved', $q);
+        $this->db->or_like('c.createdat', $q);
+        $this->db->or_like('c.createdby', $q);
+        $this->db->or_like('c.updatedat', $q);
+        $this->db->or_like('c.updatedby', $q);
+        $this->db->group_end();
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->like('id', $q);
-	$this->db->or_like('postid', $q);
-	$this->db->or_like('comment', $q);
-	$this->db->or_like('authorname', $q);
-	$this->db->or_like('authoremail', $q);
-	$this->db->or_like('authorip', $q);
-	$this->db->or_like('approved', $q);
-	$this->db->or_like('createdat', $q);
-	$this->db->or_like('createdby', $q);
-	$this->db->or_like('updatedat', $q);
-	$this->db->or_like('updatedby', $q);
-	$this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+        $this->db->select('c.*, p.title');
+        $this->db->from('comments c');
+        $this->db->join('posts p', 'p.id=c.postid', 'left');
+        $this->db->order_by('c.id', $this->order);
+        $this->db->group_start();
+        $this->db->like('c.id', $q);
+        $this->db->or_like('c.postid', $q);
+        $this->db->or_like('c.comment', $q);
+        $this->db->or_like('c.authorname', $q);
+        $this->db->or_like('c.authoremail', $q);
+        $this->db->or_like('c.authorip', $q);
+        $this->db->or_like('c.approved', $q);
+        $this->db->or_like('c.createdat', $q);
+        $this->db->or_like('c.createdby', $q);
+        $this->db->or_like('c.updatedat', $q);
+        $this->db->or_like('c.updatedby', $q);
+        $this->db->group_end();
+        $this->db->limit($limit, $start);
+        return $this->db->get()->result();
     }
 
     // insert data

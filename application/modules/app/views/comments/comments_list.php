@@ -1,12 +1,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="float-right page-breadcrumb">
-            <ol class="breadcrumb">
+        <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo base_url() ?>app">Home</a></li>
                 <li class="breadcrumb-item active"><?php echo ucfirst($this->uri->segment(2)) ?></li>
             </ol>
         </div>
-        <h5 class="page-title">Comments List</h5>
     </div>
 </div>
 <!-- end row -->
@@ -16,7 +15,7 @@
             <div class="card-header ">
                 <div class="row">
                     <div class="col-3">
-                        <?php echo anchor(site_url('comments/create'), 'Create', 'class="btn btn-primary"'); ?>
+                        <?php echo anchor(site_url('app/comments/create'), 'Create', 'class="btn btn-primary"'); ?>
                     </div>
                     <div class="col-lg-6">
                         <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
@@ -41,7 +40,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="table table-responsive">
+                <div class="table table-responsive"> 
                     <table class="table table-bordered mb-0" >
                         <tr>
                             <th>No</th>
@@ -65,11 +64,8 @@
                                 <td><?php echo $comments->approved ?></td>
                                 <td style="text-align:center" width="200px">
                                     <?php
-                                    echo anchor(site_url('comments/read/' . $comments->id), 'Read');
-                                    echo ' | ';
-                                    echo anchor(site_url('comments/update/' . $comments->id), 'Update');
-                                    echo ' | ';
-                                    echo anchor(site_url('comments/delete/' . $comments->id), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+                                    echo $this->myacl->_btnRead(site_url('app/comments/read'). $comments->id, 'Read');
+                                    echo $this->myacl->_btnDelete(site_url('app/comments/delete'), $comments->id, 'Delete');
                                     ?>
                                 </td>
                             </tr>
@@ -77,7 +73,7 @@
                         }
                         ?>
                     </table>
-                </div>
+                        </div>
             </div>
             <div class="card-footer">
                 <div class="row">
