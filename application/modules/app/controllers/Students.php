@@ -3,13 +3,16 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Students extends CI_Controller
+class Students extends MY_Controller
 {
+    public $sess;
     function __construct()
     {
         parent::__construct();
         $this->load->model('Students_model');
+        $this->load->model('Classes_model');
         $this->load->library('form_validation');
+        $this->sess = $this->session->logged_in;
     }
 
     public function index()
@@ -18,11 +21,11 @@ class Students extends CI_Controller
         $start = intval($this->input->get('start'));
         
         if ($q <> '') {
-            $config['base_url'] = base_url() . 'students/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'students/index.html?q=' . urlencode($q);
+            $config['base_url'] = base_url() . 'app/students/index?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'app/students/index?q=' . urlencode($q);
         } else {
-            $config['base_url'] = base_url() . 'students/index.html';
-            $config['first_url'] = base_url() . 'students/index.html';
+            $config['base_url'] = base_url() . 'app/students/index';
+            $config['first_url'] = base_url() . 'app/students/index';
         }
 
         $config['per_page'] = 10;
@@ -38,37 +41,19 @@ class Students extends CI_Controller
             'q' => $q,
             'pagination' => $this->pagination->create_links(),
             'total_rows' => $config['total_rows'],
-            'start' => $start,
+            'start' => $start,    
+            'template' => 'students/students_list',
+            'session' => $this->sess,
         );
-        $this->load->view('students/students_list', $data);
-    }
-
-    public function read($id) 
-    {
-        $row = $this->Students_model->get_by_id($id);
-        if ($row) {
-            $data = array(
-		'id' => $row->id,
-		'classid' => $row->classid,
-		'name' => $row->name,
-		'nisn' => $row->nisn,
-		'createdby' => $row->createdby,
-		'createdat' => $row->createdat,
-		'updatedby' => $row->updatedby,
-		'updatedat' => $row->updatedat,
-	    );
-            $this->load->view('students/students_read', $data);
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('students'));
-        }
+        $this->load->view('base/content', $data);
     }
 
     public function create() 
     {
+        $class= $this->Classes_model->get_all();
         $data = array(
             'button' => 'Create',
-            'action' => site_url('students/create_action'),
+            'action' => site_url('app/students/create_action'),
 	    'id' => set_value('id'),
 	    'classid' => set_value('classid'),
 	    'name' => set_value('name'),
@@ -77,8 +62,11 @@ class Students extends CI_Controller
 	    'createdat' => set_value('createdat'),
 	    'updatedby' => set_value('updatedby'),
 	    'updatedat' => set_value('updatedat'),
-	);
-        $this->load->view('students/students_form', $data);
+        'template' => 'students/students_form',
+            'session' => $this->sess,
+            'class'=>$class,
+        );
+        $this->load->view('base/content', $data);
     }
     
     public function create_action() 
@@ -92,26 +80,26 @@ class Students extends CI_Controller
 		'classid' => $this->input->post('classid',TRUE),
 		'name' => $this->input->post('name',TRUE),
 		'nisn' => $this->input->post('nisn',TRUE),
-		'createdby' => $this->input->post('createdby',TRUE),
-		'createdat' => $this->input->post('createdat',TRUE),
-		'updatedby' => $this->input->post('updatedby',TRUE),
-		'updatedat' => $this->input->post('updatedat',TRUE),
+		'createdat' => date("Y-m-d H:i:s"),
+                'createdby' => $this->sess['id'],
+                'updatedat' => date("Y-m-d H:i:s"),
+                'updatedby' => $this->sess['id'],
 	    );
 
             $this->Students_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('students'));
+            redirect(site_url('app/students'));
         }
     }
     
     public function update($id) 
     {
         $row = $this->Students_model->get_by_id($id);
-
+        $class = $this->Classes_model->get_all();
         if ($row) {
             $data = array(
                 'button' => 'Update',
-                'action' => site_url('students/update_action'),
+                'action' => site_url('app/students/update_action'),
 		'id' => set_value('id', $row->id),
 		'classid' => set_value('classid', $row->classid),
 		'name' => set_value('name', $row->name),
@@ -119,12 +107,15 @@ class Students extends CI_Controller
 		'createdby' => set_value('createdby', $row->createdby),
 		'createdat' => set_value('createdat', $row->createdat),
 		'updatedby' => set_value('updatedby', $row->updatedby),
-		'updatedat' => set_value('updatedat', $row->updatedat),
-	    );
-            $this->load->view('students/students_form', $data);
+		'updatedat' => set_value('updatedat', $row->updatedat),    
+        'template' => 'students/students_form',    
+        'session' => $this->sess,
+        'class'=>$class,
+            );
+            $this->load->view('base/content', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('students'));
+            redirect(site_url('app/students'));
         }
     }
     
@@ -139,15 +130,13 @@ class Students extends CI_Controller
 		'classid' => $this->input->post('classid',TRUE),
 		'name' => $this->input->post('name',TRUE),
 		'nisn' => $this->input->post('nisn',TRUE),
-		'createdby' => $this->input->post('createdby',TRUE),
-		'createdat' => $this->input->post('createdat',TRUE),
-		'updatedby' => $this->input->post('updatedby',TRUE),
-		'updatedat' => $this->input->post('updatedat',TRUE),
+                'updatedat' => date("Y-m-d H:i:s"),
+                'updatedby' => $this->sess['id'],
 	    );
 
             $this->Students_model->update($this->input->post('id', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
-            redirect(site_url('students'));
+            redirect(site_url('app/students'));
         }
     }
     
@@ -158,10 +147,10 @@ class Students extends CI_Controller
         if ($row) {
             $this->Students_model->delete($id);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('students'));
+            redirect(site_url('app/students'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('students'));
+            redirect(site_url('app/students'));
         }
     }
 
@@ -170,10 +159,6 @@ class Students extends CI_Controller
 	$this->form_validation->set_rules('classid', 'classid', 'trim|required');
 	$this->form_validation->set_rules('name', 'name', 'trim|required');
 	$this->form_validation->set_rules('nisn', 'nisn', 'trim|required');
-	$this->form_validation->set_rules('createdby', 'createdby', 'trim|required');
-	$this->form_validation->set_rules('createdat', 'createdat', 'trim|required');
-	$this->form_validation->set_rules('updatedby', 'updatedby', 'trim|required');
-	$this->form_validation->set_rules('updatedat', 'updatedat', 'trim|required');
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
