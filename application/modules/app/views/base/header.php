@@ -11,8 +11,7 @@
 
         <link rel="shortcut icon" href="<?php echo base_url($this->config->item('site_icon')) ?>">
 
-        <!--Morris Chart CSS -->
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/app/plugins/morris/morris.css">
+        
         <link href="<?php echo base_url() ?>assets/app/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="<?php echo base_url() ?>assets/app/fonts/fa5/css/all.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo base_url() ?>assets/app/css/style.css" rel="stylesheet" type="text/css">
