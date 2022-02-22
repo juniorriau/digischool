@@ -1,0 +1,1 @@
+<link href="<?php echo base_url() ?>assets/app/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
