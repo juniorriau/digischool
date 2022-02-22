@@ -82,17 +82,6 @@
                                 <input class="form-control" type="file" name="filesitehomebg" id="filesitehomebg"/>
                             </div>
                             <div class="form-group">
-                                <label for="varchar">Site Web Background </label>
-                                <?php if (!empty($site_web_bg)) { ?>
-                                    <img class="img-thumbnail" style="max-height: 240px" src="<?php echo site_url($site_web_bg) ?>"/>
-                                <?php } ?>
-                                <input class="form-control" type="file" name="filesitewebbg" id="filesitewebbg"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="varchar">Site Background Video </label>
-                                <input type="url" class="form-control" name="site_bg_video" id="site_bg_video"  value="<?php echo $site_bg_video; ?>" />
-                            </div>
-                            <div class="form-group">
                                 <label for="varchar">Site Address </label>
                                 <input type="text" class="form-control" name="site_address" id="site_address"  value="<?php echo $site_address; ?>" />
                             </div>
