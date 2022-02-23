@@ -14,7 +14,7 @@
 
         <div id="sidebar-menu">
             <ul>
-
+                <li class="<?php echo $this->uri->segment(2) == "" ? 'nav-active' : '' ?>"><a target="_blank" href="<?php echo base_url("") ?>"><i class="main-icon fas fa-globe "></i> Go To Website</a></li>
                 <li class="<?php echo $this->uri->segment(2) == "" ? 'nav-active' : '' ?>"><a href="<?php echo base_url("app") ?>"><i class="main-icon fas fa-home "></i> Beranda</a></li>
                 <?php foreach ($session['menus'] as $m) { ?>
                     <li class="<?php echo ucfirst($this->uri->segment(2)) == $m['name'] ? 'nav-active' : '' ?>"><a href="<?= $m['url'] ?>"><?= !empty($m['icon']) ? '<i class="main-icon fas fa-' . $m['icon'] . ' "></i>' : '' ?><span>  <?= empty($m['alias']) ? $m['name'] : $m['alias'] ?> </span></a></li>
