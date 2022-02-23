@@ -5,20 +5,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
  * mapres uploader file helper
  */
 if (!function_exists('imagefile')) {
 
-    function imagefile($file, $resize_width = 275, $resize_height = 200) {
+    function imagefile($file, $resize_width = 275, $resize_height = 200)
+    {
 
         $CI = & get_instance();
         $CI->load->library('image_lib');
 
         $config['upload_path'] = $file['filepath'];
-        $config['image_library'] = 'ImageMagick';
+        $config['image_library'] = 'gd';
         $config['library_path'] = '/usr/bin/';
         $config['overwrite'] = TRUE;
         $config['remove_spaces'] = TRUE;
@@ -37,7 +38,8 @@ if (!function_exists('imagefile')) {
             $config['height'] = round($resize_width * ($o_height / $o_width));
             $y_axis = round(($config['height'] / 2) - ($resize_height / 2));
             $x_axis = 0;
-        } else {
+        }
+        else {
             $config['width'] = round($resize_height * ($o_width / $o_height));
             $config['height'] = $resize_height;
             $y_axis = 0;
