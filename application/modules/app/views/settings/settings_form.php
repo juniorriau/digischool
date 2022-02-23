@@ -139,7 +139,10 @@
                                     <option value="0" <?php echo $site_enable_recent == 0 ? 'selected' : ''; ?>>No</option>
                                 </select>
                             </div>
-
+                            <div class="form-group">
+                                <label for="varchar">Limit Posts Slider</label>
+                                <input type="text" class="form-control" name="site_limit_post_slider" id="site_limit_post_slider"  value="<?php echo $site_limit_post_slider; ?>"/>
+                            </div>
                         </div>
                         <div class="tab-pane p-3" id="socialmedia" role="tabpanel">
                             <div class="form-group">
