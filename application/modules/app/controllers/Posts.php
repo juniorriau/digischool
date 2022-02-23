@@ -7,7 +7,6 @@ class Posts extends MY_Controller {
 
     public $type;
     public $sess;
-    public $filename = '';
 
     function __construct() {
         parent::__construct();
@@ -103,7 +102,7 @@ class Posts extends MY_Controller {
             $this->create();
         } else {
 
-            if (!empty($_FILES['postimage'])) {
+            if (!empty($_FILES['postimage']['name'])) {
                 $result = fileuploader($_FILES, "postimage", "", "gif|jpg|jpeg|png|");
                 if ($result['status'] == "success") {
                     $this->load->helper('imagefile');
@@ -127,7 +126,8 @@ class Posts extends MY_Controller {
                     'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
                     'content' => $this->input->post('content', FALSE),
                     'categoryid' => $this->input->post('categoryid', TRUE),
-                    'postimage' => $this->filename,
+                    'postimage' => $result['message']['fullpath'],
+                    'postimagethumb'=> $result['message']['filepath']."/thumb_".$result['message']['filename'],
                     'type' => $this->input->post('type', TRUE),
                     'metapost' => $this->input->post('metapost', TRUE),
                     'keywords' => $this->input->post('keywords', TRUE),
@@ -182,8 +182,8 @@ class Posts extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id', TRUE));
         } else {
-            $this->filename = $this->input->post('currentimage', TRUE);
-            if (!empty($_FILES['postimage'])) {
+            
+            if (!empty($_FILES['postimage']['name'])) {
 
                 $result = fileuploader($_FILES, "postimage", "", "gif|jpg|jpeg|png|");
                 if ($result['status'] == "success") {
@@ -206,8 +206,27 @@ class Posts extends MY_Controller {
                     'title' => $this->input->post('title', TRUE),
                     'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
                     'content' => $this->input->post('content', FALSE),
+                    'categoryid' => $this->input->post('categoryid', TRUE),                    
+                    'postimage' => $result['message']['fullpath'],
+                    'postimagethumb'=> $result['message']['filepath']."/thumb_".$result['message']['filename'],
+                    'type' => $this->input->post('type', TRUE),
+                    'metapost' => $this->input->post('metapost', TRUE),
+                    'keywords' => $this->input->post('keywords', TRUE),
+                    'poststatus' => $this->input->post('poststatus', TRUE),
+                    'commentstatus' => $this->input->post('commentstatus', TRUE),
+                    'updatedat' => date("Y-m-d H:i:s"),
+                    'updatedby' => $this->sess['id'],
+                );
+
+                $this->Posts_model->update($this->input->post('id', TRUE), $data);
+                $this->session->set_flashdata('message', 'Update Record Success');
+                redirect(site_url('app/posts'));
+            }else{
+                $data = array(
+                    'title' => $this->input->post('title', TRUE),
+                    'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
+                    'content' => $this->input->post('content', FALSE),
                     'categoryid' => $this->input->post('categoryid', TRUE),
-                    'postimage' => $this->filename,
                     'type' => $this->input->post('type', TRUE),
                     'metapost' => $this->input->post('metapost', TRUE),
                     'keywords' => $this->input->post('keywords', TRUE),
