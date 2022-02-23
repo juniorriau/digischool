@@ -43,10 +43,10 @@
                             <h6>Place Category Lists</h6>
                         </div>
                         <div class="card-body">
-                            <div class="custom-dd dd" id="nestable_placecategory">
+                            <div class="custom-dd dd" id="nestable_category">
                                 <ol class="dd-list">
-                                    <?php foreach ($placecategory as $pc) { ?>
-                                        <li class="dd-item" data-id="<?php echo $pc->category . ";" . base_url("web/places/category/" . $pc->slug) ?>">
+                                    <?php foreach ($category as $pc) { ?>
+                                        <li class="dd-item" data-id="<?php echo $pc->category . ";" . base_url("web/categories/" . $pc->slug) ?>">
                                             <div class="dd-handle">
                                                 <?php echo $pc->category ?>
                                             </div>
