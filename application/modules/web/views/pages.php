@@ -3,8 +3,8 @@
     <section class="gray-bg no-top-padding-sec" id="sec1">
         <div class="container">
             <div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
-                <a href="<?php echo base_url($thi->uri->segment(1)) ?>">Home</a>
-                <a href="<?php echo base_url($thi->uri->segment(2)) ?>>"><?php echo $this->uri->segment(2) ?></a>
+                <a href="<?php echo base_url($this->uri->segment(1)) ?>">Home</a>
+                <a href="<?php echo base_url($this->uri->segment(2)) ?>>"><?php echo $this->uri->segment(2) ?></a>
                 <span><?php echo $this->uri->segment(3) ?></span>
 
             </div>
