@@ -1,0 +1,28 @@
+a:hover, .top_bar a:hover, #primary_nav_wrap ul a:hover, .feat-item .post-header span a, .a-post-box .latest-title a:hover, 
+.breaking_news .breaking_news_slider a span, .block_posts .small_post_content a:hover, .featured_cat_slider a:hover, 
+.hz_top_post .hz_title_and_meta h3:hover, .hz_meta_post a:hover, .inner_sidebar .widget a:hover, .inner_footer .widget a:hover, 
+.widget_calendar a {
+   color: #e64883;
+}
+
+/*...............*/
+
+#primary_nav_wrap ul a:hover{
+  border-bottom: 2px solid #e64883;
+}
+/*...............*/
+
+
+.social_icon span a:hover, .navbar-toggle, .a-post-box .latest-cat a, .breaking_news .bn_title, .caption_inner .latest-cat a, .view_button, 
+.slider_button a, .hz_bottom_post .hz_icon_shere .hz_share span a:hover, .hz_bottom_post .hz_icon_shere .share_toggle:hover, .hz_read_more a, 
+.hz_thumb_post .hz_cat_post a, .link_post .hz_thumb_post, .hz_post .hz_thumb_post i, .quote_post .hz_thumb_post, .hz_tags span a:hover, 
+.user_info_post .social_icon span a:hover, .comment-reply.button, .comment-edit-link, .comment-reply-link, .widget .tagcloud a:hover, 
+.widget_search .button, button, input[type="submit"], input[type="reset"], input[type="button"], .hmztop:hover, .back-to-home a:hover, .widget_title:after{
+	background-color: #e64883;
+}
+
+
+.breaking_news .bn_title span{
+	border-left-color: #e64883;
+  	border-color: transparent transparent transparent #e64883; 
+}
