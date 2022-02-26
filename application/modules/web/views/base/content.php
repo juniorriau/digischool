@@ -1,131 +1,120 @@
 <?php $this->load->view('base/header') ?>
-<!--loader-->
-<div class="loader-wrap">
-    <div class="loader-inner">
-        <div class="loader-inner-cirle"></div>
-    </div>
-</div>
-<!--loader end-->
-<!-- main start  -->
-<div id="main">
-    <!-- header -->
-    <?php $this->load->view('base/nav') ?>
-    <!-- header end-->
-    <!-- wrapper-->
-    <div id="wrapper">
-        <?php $this->load->view($template); ?>
-    </div>
-    <!--wrapper end-->
-    <!--footer -->
-    <footer class = "main-footer fl-wrap">
-        <!--footer-header-->
+	<div class="all_content news_layout animsition container-fluid">
+		<div class="row">
 
-        <!--footer-inner-->
-        <div class = "footer-inner   fl-wrap">
-            <div class = "container">
-                <div class = "row">
-                    <!--footer-widget-->
-                    <div class = "col-md-4">
-                        <div class = "footer-widget fl-wrap">
-                            <div class = "footer-logo"><a href = "<?php echo base_url("app") ?>"><img src = "<?php echo base_url($this->config->item('site_logo')) ?>" alt = ""></a></div>
-                            <div class = "footer-contacts-widget fl-wrap">
-
-                                <ul class = "footer-contacts fl-wrap no-list-style">
-                                    <li><span><i class = "fal fa-envelope"></i> Mail :</span><a href = "#" target = "_blank"><?php echo $this->config->item('site_email') ?></a></li>
-                                    <li> <span><i class = "fal fa-map-marker"></i> Adress :</span><a href = "#" target = "_blank"><?php echo $this->config->item('site_address') ?></a></li>
-                                    <li><span><i class = "fal fa-phone"></i> Phone :</span><a href = "#"><?php echo $this->config->item('site_phone') ?></a></li>
-                                </ul>
-                                <div class = "footer-social">
-                                    <span>Find us on: </span>
-                                    <ul class = "no-list-style">
-                                        <li><a href = "#" target = "_blank"><i class = "fab fa-facebook-f"></i></a></li>
-                                        <li><a href = "#" target = "_blank"><i class = "fab fa-twitter"></i></a></li>
-                                        <li><a href = "#" target = "_blank"><i class = "fab fa-instagram"></i></a></li>
-                                        <li><a href = "#" target = "_blank"><i class = "fab fa-vk"></i></a></li>
-                                        <li><a href = "#" target = "_blank"><i class = "fab fa-whatsapp"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--footer-widget end-->
-                    <!--footer-widget-->
-                    <div class = "col-md-4">
-                        <div class = "footer-widget fl-wrap">
-                            <h3>Destinasi Terbaru</h3>
-                            <div class = "footer-widget-posts fl-wrap">
-                                <ul class = "no-list-style">
-                                    <?php
-                                    if (!empty($newplace)) {
-                                        foreach ($newplace as $np) {
-                                            ?>
-                                            <li class = "clearfix">
-                                                <a href = "<?php echo base_url('web/places/detail/' . $np->id) ?>" class = "widget-posts-img"><img src = "<?php echo base_url($np->image_path . "/" . $np->image_name) ?>" class = "respimg" alt = ""></a>
-                                                <div class = "widget-posts-descr">
-                                                    <a href = "<?php echo base_url('web/places/detail/' . $np->id) ?>" title = ""><?php echo $np->name ?></a>
-                                                    <span class = "widget-posts-date"><i class = "fal fa-calendar"></i> <?php echo date_format(date_create($np->createdat), 'd F y') ?> </span>
-                                                </div>
-                                            </li>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
+			<div class="header"><!-- header -->
+				<div class="top_bar"><!-- top_bar -->
+					<div class="min_top_bar"><!-- min_top_bar -->
+						<div class="container">
 
 
-                                </ul>
+							<div id="top_search_ico"><!-- top_search_ico -->
+								<div class="top_search">
+									<form method="POST" action="<?php base_url('web/search/keyword/')?>"><input type="text" placeholder="Search and hit enter..."></form>
+									<i class="fa fa-search search-desktop"></i>
+								</div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!--footer-widget end-->
-                    <!--footer-widget -->
-                    <div class = "col-md-4">
-                        <div class = "footer-widget fl-wrap ">
-                            <h3>Our Twitter</h3>
-                            <div class = "twitter-holder fl-wrap scrollbar-inner2" data-simplebar data-simplebar-auto-hide = "false">
-                                <div id = "footer-twiit"></div>
-                            </div>
-                            <a href = "#" class = "footer-link twitter-link" target = "_blank">Follow us <i class = "fal fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <!--footer-widget end-->
-                </div>
-            </div>
-            <!--footer bg-->
-            <div class = "footer-bg" data-ran = "4"></div>
-            <div class = "footer-wave">
-                <svg viewbox = "0 0 100 25">
-                <path fill = "#fff" d = "M0 30 V12 Q30 17 55 12 T100 11 V30z" />
-                </svg>
-            </div>
-            <!--footer bg end-->
-        </div>
-        <!--footer-inner end -->
-        <!--sub-footer-->
-        <div class = "sub-footer  fl-wrap">
-            <div class = "container">
-                <div class = "copyright"> &#169; <?php echo $this->config->item('site_name') ?> </div>
-                <div class = "lang-wrap">
-                    <div class = "show-lang"><span><i class = "fal fa-globe-europe"></i><strong>En</strong></span><i class = "fa fa-caret-down arrlan"></i></div>
-                    <ul class = "lang-tooltip lang-action no-list-style">
-                        <li><a href = "#" class = "current-lan" data-lantext = "En">English</a></li>
-                    </ul>
-                </div>
-                <div class = "subfooter-nav">
-                    <ul class = "no-list-style">
-                        <li><a href = "#">Terms of use</a></li>
-                        <li><a href = "#">Privacy Policy</a></li>
-                        <li><a href = "#">Blog</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--sub-footer end -->
-    </footer>
-    <!--footer end -->
+								<div id="top_search_toggle">
+									<div id="search_toggle_top">
+									<form method="POST" action="<?php base_url('web/search/keyword/')?>"><input type="text" placeholder="Search and hit enter..."></form>
+									</div>
+									<i class="fa fa-search search-desktop"></i>
+								</div>
+							</div><!-- // top_search_ico -->
 
-    <a class = "to-top"><i class = "fas fa-caret-up"></i></a>
-</div>
-<!--Main end -->
-<?php
-$this->load->view('base/footer');
+							<div class="social_icon"><!-- social_icon -->
+								<span><a target="_blank" href="<?php echo $this->config->item('social_facebook')?>"><i class="fa fa-facebook"></i></a></span>
+								<span><a target="_blank" href="<?php echo $this->config->item('social_twitter')?>"><i class="fa fa-twitter"></i></a></span>
+								<span><a target="_blank" href="<?php echo $this->config->item('social_youtube')?>"><i class="fa fa-youtube"></i></a></span>
+								<span><a target="_blank" href="<?php echo $this->config->item('social_instagram')?>"><i class="fa fa-instagram"></i></a></span>
+								<span><a target="_blank" href="<?php echo $this->config->item('social_linkedin')?>"><i class="fa fa-linkedin"></i></a></span>
+							</div><!-- // social_icon -->
+						</div>
+					</div><!-- // min_top_bar -->
+				</div><!-- // top_bar -->
+
+				<div class="main_header"><!-- main_header -->
+					<div class="container">
+						<div class="logo_ads"><!-- logo_ads -->
+							<div class="logo"><!-- logo -->
+								<!-- <h3>logo</h3> -->
+								<a href="<?php echo base_url()?>"><img class="img img-responsive" src="<?php echo base_url($this->config->item('site_home_bg'))?>" alt="Logo"></a>
+							</div><!-- // logo -->
+							
+						</div><!-- // logo_ads -->
+					</div>
+
+					<?php $this->load->view('base/nav'); ?>
+				</div><!-- // main_header -->
+			</div><!-- End header -->
+			
+			<div class="main_content container"><!-- main_content -->
+            <?php
+            $this->load->view($template);
+            ?>
+			</div><!-- main_content -->
+
+			<div id="footer" class="footer container-fulid"><!-- footer -->
+				<footer class="main_footer"><!-- main_footer -->
+						<div class="container">
+							<div class="row">
+								
+								<div class="col-sm-4"><!-- start first footer widget area -->
+									<div id="text-3" class="widget widget_text"><!-- widget_text -->
+										<h4 class="widget_title"><?php echo $this->config->item('site_name')?></h4>
+										<div class="logo_widget">
+											<a href="#"><img class="img img-thumbnail" src="<?php echo base_url($this->config->item('site_logo'))?>" alt="Logo"></a>
+										</div>
+										<div class="textwidget">
+											<p><?php echo $this->config->item('site_description')?></p>
+                                            <p><?php echo $this->config->item('site_address')?></p>
+										</div>
+									</div>	<!-- // widget_text -->
+								</div><!-- end first footer widget area -->
+
+								<div class="col-sm-4"><!-- start third footer widget area -->
+									<div class="widget widget_recent_post"><!-- Start widget recent post -->
+										<h4 class="widget_title">Alternatif Link</h4>
+										<ul class="recent_post">
+											<li>
+												<div class="widget_post_info">
+													<h5><a href="https://ppdb.smkcitramedikamgl.sch.id/">PPDB Online</a></h5>
+													
+												</div>
+											</li>
+                                            <li>
+												<div class="widget_post_info">
+													<h5><a href="https://alumni.smkcitramedikamgl.sch.id/">Alumni</a></h5>
+													
+												</div>
+											</li>
+										</ul>
+									</div><!-- End widget recent post -->
+								</div><!-- end third footer widget area -->
+
+								<div class="col-sm-4"><!-- start first footer widget area -->
+									
+								</div><!-- end first footer widget area -->
+
+							</div>
+						</div>
+				</footer><!-- // main_footer -->
+
+				<div class="copyright"><!-- copyright -->
+					<div class="hmztop">Scroll To Top</div><!-- hmztop -->
+					<div class="container">
+						<div class="social_icon"><!-- social_icon -->
+							<span><a target="new" href="<?php echo $this->config->item('social_facebook')?>"><i class="fa fa-facebook"></i></a></span>
+							<span><a target="new" href="<?php echo $this->config->item('social_twitter')?>"><i class="fa fa-twitter"></i></a></span>
+							<span><a target="new" href="<?php echo $this->config->item('social_youtube')?>"><i class="fa fa-youtube"></i></a></span>
+							<span><a target="new" href="<?php echo $this->config->item('social_instagram')?>"><i class="fa fa-instagram"></i></a></span>
+							<span><a target="new" href="<?php echo $this->config->item('social_linkedin')?>"><i class="fa fa-linkedin"></i></a></span>
+						</div><!-- // social_icon -->
+						<p>Copyrights © <?php echo date('Y')?> <?php echo $this->config->item('site_name')?></p>
+					</div>
+				</div><!-- // copyright -->
+			</div><!-- // footer -->
+
+		</div><!-- End row -->
+	</div><!-- End all_content -->
+<?php $this->load->view('base/footer');
