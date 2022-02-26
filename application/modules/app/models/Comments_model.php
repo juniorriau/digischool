@@ -29,7 +29,16 @@ class Comments_model extends CI_Model
         $this->db->from('comments c');
         $this->db->join('posts p', 'p.id=c.postid', 'left');
         $this->db->where('c.id', $id);
-        return $this->db->get($this->table)->row();
+        return $this->db->get()->row();
+    }
+
+    function get_by_postid($postid)
+    {
+        $this->db->select('c.*');
+        $this->db->from('comments c');
+        $this->db->join('posts p', 'p.id=c.postid');
+        $this->db->where('p.id', $postid);
+        return $this->db->get()->row();
     }
 
     // get total rows
