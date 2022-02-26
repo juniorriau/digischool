@@ -1,22 +1,26 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pages extends MY_Controller {
+class Pages extends MY_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('app/Pages_model');
     }
 
-    public function index() {
+    public function index()
+    {
         $page = $this->Pages_model->get_by_slug('page', $this->uri->segment(3));
         if (!empty($page)) {
             $data = array(
                 "template" => 'pages',
                 "page" => $page,
             );
-        } else {
+        }
+        else {
             $data = array(
                 "template" => '404',
             );
