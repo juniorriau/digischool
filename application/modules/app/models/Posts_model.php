@@ -8,7 +8,7 @@ class Posts_model extends CI_Model
 
     public $table = 'posts';
     public $id = 'id';
-    public $order = 'ASC';
+    public $order = 'Desc';
     public $type = 'post';
 
     function __construct()
@@ -33,11 +33,17 @@ class Posts_model extends CI_Model
     }
 
     //get data by slug
-    function get_by_slug($type, $slug)
+    function get_by_slug($slug, $status = '')
     {
-        $this->db->where('type', $type);
-        $this->db->where('slug', $slug);
-        return $this->db->get($this->table)->row();
+        $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
+        $this->db->from('posts p');
+        $this->db->join('categories c', 'c.id=p.categoryid', 'left');
+        $this->db->join('users u', 'u.id=c.createdby');
+        $this->db->join('userdetails ud', 'ud.userid=u.id');
+        $this->db->where('p.type', $this->type);
+        $this->db->where('p.poststatus', $status);
+        $this->db->where('p.slug', $slug);
+        return $this->db->get()->row();
     }
 
     // get total rows
@@ -72,9 +78,11 @@ class Posts_model extends CI_Model
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $this->db->select('p.*, c.category');
+        $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid', 'left');
+        $this->db->join('users u', 'u.id=c.createdby');
+        $this->db->join('userdetails ud', 'ud.userid=u.id');
         $this->db->where('p.type', $this->type);
         $this->db->order_by($this->id, $this->order);
         $this->db->group_start();
@@ -98,6 +106,41 @@ class Posts_model extends CI_Model
         $this->db->limit($limit, $start);
         return $this->db->get()->result();
     }
+
+
+    function get_public_post($limit, $cslug = NULL, $start = 0, $q = NULL)
+    {
+        $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
+        $this->db->from('posts p');
+        $this->db->join('categories c', 'c.id=p.categoryid');
+        $this->db->join('users u', 'u.id=c.createdby');
+        $this->db->join('userdetails ud', 'ud.userid=u.id');
+        $this->db->where('p.type', $this->type);
+        $this->db->where('p.poststatus', 'Public');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('c.slug', $cslug);
+        $this->db->group_start();
+        $this->db->or_like('p.id', $q);
+        $this->db->or_like('p.guuid', $q);
+        $this->db->or_like('p.title', $q);
+        $this->db->or_like('p.categoryid', $q);
+        $this->db->or_like('p.content', $q);
+        $this->db->or_like('p.postimage', $q);
+        $this->db->or_like('p.type', $q);
+        $this->db->or_like('p.metapost', $q);
+        $this->db->or_like('p.keywords', $q);
+        $this->db->or_like('p.commentstatus', $q);
+        $this->db->or_like('p.poststatus', $q);
+        $this->db->or_like('p.createdat', $q);
+        $this->db->or_like('p.createdby', $q);
+        $this->db->or_like('p.updatedat', $q);
+        $this->db->or_like('p.updatedby', $q);
+        $this->db->or_like('c.category', $q);
+        $this->db->group_end();
+        $this->db->limit($limit, $start);
+        return $this->db->get()->result();
+    }
+
 
     // insert data
     function insert($data)
