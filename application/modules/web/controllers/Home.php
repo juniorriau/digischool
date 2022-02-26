@@ -1,30 +1,30 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Home extends MY_Controller {
+class Home extends MY_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
-        $this->load->model('app/Places_model');
-        $this->load->model('app/Placecategory_model');
-        $this->load->model('app/Facilities_model');
+        $this->load->model('app/Posts_model');
     }
 
-    public function index() {
-        $placecategory = $this->Placecategory_model->get_all();
-        $places = $this->Places_model->get_limit_data(12);
-        $facility = $this->Facilities_model->get_all();
-        $newplace = $this->Places_model->get_limit_data(3);
+    public function index()
+    {
+
+        $recentpost = $this->Posts_model->get_public_post($this->config->item('site_limit_post'));
+        $kegiatansekolah = $this->Posts_model->get_public_post($this->config->item('site_limit_post'), "kegiatan-sekolah");
+        $kegiatansiswa = $this->Posts_model->get_public_post($this->config->item('site_limit_post'), "kegiatan-siswa");
+        $slider = $this->Posts_model->get_public_post($this->config->item('site_limit_post_slider'));
         $data = array(
             'template' => 'home',
-            'facility' => $facility,
-            'places' => $places,
-            'placecategory' => $placecategory,
-            'newplace' => $newplace,
-            'extrajs' => 'base/home_extrajs',
+            'recentpost' => $recentpost,
+            'kegiatansekolah' => $kegiatansekolah,
+            'kegiatansiswa' => $kegiatansiswa,
+            'slider' => $slider,
         );
         $this->load->view('base/content', $data);
     }
-
 }
