@@ -20,7 +20,7 @@
                     <li class="<?php echo ucfirst($this->uri->segment(2)) == $m['name'] ? 'nav-active' : '' ?>"><a href="<?= $m['url'] ?>"><?= !empty($m['icon']) ? '<i class="main-icon fas fa-' . $m['icon'] . ' "></i>' : '' ?><span>  <?= empty($m['alias']) ? $m['name'] : $m['alias'] ?> </span></a></li>
                 <?php } ?>
             </ul>
-            <?php if ($session['role'] == 1) { ?>
+            <?php if ($session['role'] == 1 || $session['rolename'] == "Administrator") { ?>
 
                 <ul >
 
