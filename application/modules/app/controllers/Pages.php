@@ -33,8 +33,8 @@ class Pages extends MY_Controller {
 
         $config['per_page'] = 10;
         $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Pages_model->total_rows($q, $this->type);
-        $pages = $this->Pages_model->get_limit_data($config['per_page'], $start, $q, $this->type);
+        $config['total_rows'] = $this->Pages_model->total_rows($q);
+        $pages = $this->Pages_model->get_limit_data($config['per_page'], $start, $q);
 
         $this->load->library('pagination');
         $this->pagination->initialize($config);
@@ -122,7 +122,7 @@ class Pages extends MY_Controller {
                 'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
                 'content' => $this->input->post('content', FALSE),
                 'postimage' => $this->filename,
-                'type' => $this->input->post('type', TRUE),
+                'type' => $this->type,
                 'metapost' => $this->input->post('metapost', TRUE),
                 'keywords' => $this->input->post('keywords', TRUE),
                 'poststatus' => $this->input->post('poststatus', TRUE),
@@ -195,7 +195,7 @@ class Pages extends MY_Controller {
                 'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
                 'content' => $this->input->post('content', FALSE),
                 'postimage' => $this->filename,
-                'type' => $this->input->post('type', TRUE),
+                'type' => $this->type,
                 'metapost' => $this->input->post('metapost', TRUE),
                 'keywords' => $this->input->post('keywords', TRUE),
                 'poststatus' => $this->input->post('poststatus', TRUE),

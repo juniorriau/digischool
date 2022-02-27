@@ -59,7 +59,6 @@
                 </div>
                 <div class="card-footer">
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                    <input type="hidden" name="type" id="type" value="page" />
                     <input type="hidden" name="commentstatus" id="commentstatus" value="0" />
 
                     <input type="hidden" name="currentimage" id="currentimage" value="<?php echo $postimage ?>" />
