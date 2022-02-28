@@ -3,46 +3,40 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pages_model extends CI_Model
-{
+class Pages_model extends CI_Model {
 
     public $table = 'posts';
     public $id = 'id';
     public $order = 'Desc';
-    public $type = 'page';
+    public $type = 'pages';
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
     }
 
     // get all
-    function get_all()
-    {
+    function get_all() {
         $this->db->where('type', $this->type);
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
 
     // get data by id
-    function get_by_id($id)
-    {
+    function get_by_id($id) {
         $this->db->where('type', $this->type);
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
 
     //get data by slug
-    function get_by_slug($type, $slug)
-    {
+    function get_by_slug($type, $slug) {
         $this->db->where('type', $type);
         $this->db->where('slug', $slug);
         return $this->db->get($this->table)->row();
     }
 
     // get total rows
-    function total_rows($q = NULL)
-    {
+    function total_rows($q = NULL) {
         $this->db->where('type', $this->type);
         $this->db->group_start();
         $this->db->like('id', $q);
@@ -65,8 +59,7 @@ class Pages_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
-    {
+    function get_limit_data($limit, $start = 0, $q = NULL) {
         $this->db->where('type', $this->type);
         $this->db->order_by($this->id, $this->order);
         $this->db->group_start();
@@ -90,22 +83,19 @@ class Pages_model extends CI_Model
     }
 
     // insert data
-    function insert($data)
-    {
+    function insert($data) {
         $this->db->insert($this->table, $data);
     }
 
     // update data
-    function update($id, $data)
-    {
+    function update($id, $data) {
         $this->db->where($this->id, $id);
         $this->db->where('type', $this->type);
         $this->db->update($this->table, $data);
     }
 
     // delete data
-    function delete($id)
-    {
+    function delete($id) {
         $this->db->where($this->id, $id);
         $this->db->where('type', $this->type);
         $this->db->delete($this->table);
