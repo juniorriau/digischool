@@ -3,38 +3,33 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Posts_model extends CI_Model
-{
+class Posts_model extends CI_Model {
 
     public $table = 'posts';
     public $id = 'id';
     public $order = 'Desc';
-    public $type = 'post';
+    public $type = 'posts';
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
     }
 
     // get all
-    function get_all()
-    {
+    function get_all() {
         $this->db->where('type', $this->type);
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
 
     // get data by id
-    function get_by_id($id)
-    {
+    function get_by_id($id) {
         $this->db->where('type', $this->type);
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
 
     //get data by slug
-    function get_by_slug($slug, $status = '')
-    {
+    function get_by_slug($slug, $status = '') {
         $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid', 'left');
@@ -47,8 +42,7 @@ class Posts_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL)
-    {
+    function total_rows($q = NULL) {
         $this->db->select('p.*, c.category');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid', 'left');
@@ -76,8 +70,7 @@ class Posts_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
-    {
+    function get_limit_data($limit, $start = 0, $q = NULL) {
         $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid', 'left');
@@ -107,9 +100,7 @@ class Posts_model extends CI_Model
         return $this->db->get()->result();
     }
 
-
-    function get_public_post($limit, $cslug = NULL, $start = 0, $q = NULL)
-    {
+    function get_public_post($limit, $cslug = NULL, $start = 0, $q = NULL) {
         $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid');
@@ -141,24 +132,20 @@ class Posts_model extends CI_Model
         return $this->db->get()->result();
     }
 
-
     // insert data
-    function insert($data)
-    {
+    function insert($data) {
         $this->db->insert($this->table, $data);
     }
 
     // update data
-    function update($id, $data)
-    {
+    function update($id, $data) {
         $this->db->where($this->id, $id);
         $this->db->where('type', $this->type);
         $this->db->update($this->table, $data);
     }
 
     // delete data
-    function delete($id)
-    {
+    function delete($id) {
         $this->db->where($this->id, $id);
         $this->db->where('type', $this->type);
         $this->db->delete($this->table);

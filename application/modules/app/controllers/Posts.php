@@ -33,8 +33,8 @@ class Posts extends MY_Controller {
 
         $config['per_page'] = 10;
         $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Posts_model->total_rows($q, $this->type);
-        $posts = $this->Posts_model->get_limit_data($config['per_page'], $start, $q, $this->type);
+        $config['total_rows'] = $this->Posts_model->total_rows($q);
+        $posts = $this->Posts_model->get_limit_data($config['per_page'], $start, $q);
 
         $this->load->library('pagination');
         $this->pagination->initialize($config);
@@ -75,7 +75,7 @@ class Posts extends MY_Controller {
     }
 
     public function create() {
-        $category=$this->Categories_model->get_all();
+        $category = $this->Categories_model->get_all();
         $data = array(
             'button' => 'Create',
             'action' => site_url('app/posts/create_action'),
@@ -127,8 +127,8 @@ class Posts extends MY_Controller {
                     'content' => $this->input->post('content', FALSE),
                     'categoryid' => $this->input->post('categoryid', TRUE),
                     'postimage' => $result['message']['fullpath'],
-                    'postimagethumb'=> $result['message']['filepath']."/thumb_".$result['message']['filename'],
-                    'type' => $this->input->post('type', TRUE),
+                    'postimagethumb' => $result['message']['filepath'] . "/thumb_" . $result['message']['filename'],
+                    'type' => $this->type,
                     'metapost' => $this->input->post('metapost', TRUE),
                     'keywords' => $this->input->post('keywords', TRUE),
                     'poststatus' => $this->input->post('poststatus', TRUE),
@@ -142,13 +142,12 @@ class Posts extends MY_Controller {
                 $this->session->set_flashdata('message', 'Create Record Success');
                 redirect(site_url('app/posts'));
             }
-            
         }
     }
 
     public function update($id) {
         $row = $this->Posts_model->get_by_id($id);
-        $category=$this->Categories_model->get_all();
+        $category = $this->Categories_model->get_all();
         if ($row) {
             $data = array(
                 'button' => 'Update',
@@ -159,15 +158,14 @@ class Posts extends MY_Controller {
                 'content' => set_value('content', $row->content),
                 'categoryid' => set_value('categoryid', $row->categoryid),
                 'postimage' => set_value('postimage', $row->postimage),
-                'type' => set_value('type', $row->type),
                 'metapost' => set_value('metapost', $row->metapost),
                 'keywords' => set_value('keywords', $row->keywords),
                 'poststatus' => set_value('poststatus', $row->poststatus),
-                'commentstatus' => set_value('commentstatus',$row->commentstatus),
+                'commentstatus' => set_value('commentstatus', $row->commentstatus),
                 'template' => 'posts/posts_form',
                 'extrajs' => 'posts/posts_extrajs',
                 'session' => $this->sess,
-                'category'=>$category,
+                'category' => $category,
             );
             $this->load->view('base/content', $data);
         } else {
@@ -182,7 +180,7 @@ class Posts extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id', TRUE));
         } else {
-            
+
             if (!empty($_FILES['postimage']['name'])) {
 
                 $result = fileuploader($_FILES, "postimage", "", "gif|jpg|jpeg|png|");
@@ -200,16 +198,16 @@ class Posts extends MY_Controller {
                         'updatedby' => $this->sess['id'],
                     );
                     $this->Media_model->insert($data);
-                    $this->filename=$result['message']['fullpath'];
+                    $this->filename = $result['message']['fullpath'];
                 }
                 $data = array(
                     'title' => $this->input->post('title', TRUE),
                     'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
                     'content' => $this->input->post('content', FALSE),
-                    'categoryid' => $this->input->post('categoryid', TRUE),                    
+                    'categoryid' => $this->input->post('categoryid', TRUE),
                     'postimage' => $result['message']['fullpath'],
-                    'postimagethumb'=> $result['message']['filepath']."/thumb_".$result['message']['filename'],
-                    'type' => $this->input->post('type', TRUE),
+                    'postimagethumb' => $result['message']['filepath'] . "/thumb_" . $result['message']['filename'],
+                    'type' => $this->type,
                     'metapost' => $this->input->post('metapost', TRUE),
                     'keywords' => $this->input->post('keywords', TRUE),
                     'poststatus' => $this->input->post('poststatus', TRUE),
@@ -221,7 +219,7 @@ class Posts extends MY_Controller {
                 $this->Posts_model->update($this->input->post('id', TRUE), $data);
                 $this->session->set_flashdata('message', 'Update Record Success');
                 redirect(site_url('app/posts'));
-            }else{
+            } else {
                 $data = array(
                     'title' => $this->input->post('title', TRUE),
                     'slug' => url_title($this->input->post('title', TRUE), "-", TRUE),
@@ -240,7 +238,6 @@ class Posts extends MY_Controller {
                 $this->session->set_flashdata('message', 'Update Record Success');
                 redirect(site_url('app/posts'));
             }
-            
         }
     }
 

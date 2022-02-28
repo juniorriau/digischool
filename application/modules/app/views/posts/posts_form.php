@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label for="varchar">Post Image <?php echo form_error('postimage') ?></label>
-                         <?php if (!empty($postimage)) { ?>
+                        <?php if (!empty($postimage)) { ?>
                             <a class="image-popup-vertical-fit" href="<?php echo site_url($postimage) ?>" title="<?php echo $title; ?>">
 
                                 <img src="<?php echo site_url($postimage) ?>" class="img img-thumbnail d-block mo-mb-2" style="max-height: 250px;width: auto;" alt=""/>
@@ -75,7 +75,6 @@
                 </div>
                 <div class="card-footer">
                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                    <input type="hidden" name="type" id="type" value="post" />
                     <input type="hidden" name="currentimage" id="currentimage" value="<?php echo $postimage ?>" />
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                     <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
