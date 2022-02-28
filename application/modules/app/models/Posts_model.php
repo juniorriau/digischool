@@ -100,6 +100,36 @@ class Posts_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    //get public post count for web
+    function get_total_public_post_rows($q = NULL) {
+        $this->db->select('p.*, c.category');
+        $this->db->from('posts p');
+        $this->db->join('categories c', 'c.id=p.categoryid', 'left');
+        $this->db->where('p.type', $this->type);
+        $this->db->order_by($this->id, $this->order);
+        $this->db->group_start();
+        $this->db->like('p.id', $q);
+        $this->db->or_like('p.guuid', $q);
+        $this->db->or_like('p.title', $q);
+        $this->db->or_like('p.categoryid', $q);
+        $this->db->or_like('p.content', $q);
+        $this->db->or_like('p.postimage', $q);
+        $this->db->or_like('p.type', $q);
+        $this->db->or_like('p.metapost', $q);
+        $this->db->or_like('p.keywords', $q);
+        $this->db->or_like('p.commentstatus', $q);
+        $this->db->or_like('p.poststatus', $q);
+        $this->db->or_like('p.createdat', $q);
+        $this->db->or_like('p.createdby', $q);
+        $this->db->or_like('p.updatedat', $q);
+        $this->db->or_like('p.updatedby', $q);
+        $this->db->or_like('c.category', $q);
+        $this->db->or_like('c.slug', $q);
+        $this->db->group_end();
+        return $this->db->count_all_results();
+    }
+
+    //get public posts for web
     function get_public_post($limit, $cslug = NULL, $start = 0, $q = NULL) {
         $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
