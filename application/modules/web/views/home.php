@@ -27,8 +27,6 @@
                     <?php } ?>
                 </ul>
                 <?php
-            } else {
-                echo "kosong";
             }
             ?>
         </div>
@@ -61,7 +59,7 @@
                             </div>
                         </div>
                     </div><!-- // item -->
-                <?php
+                    <?php
                 }
             }
             ?>
@@ -116,7 +114,7 @@
                                     </li>
                                 </ul>
                             </div>
-    <?php } else { ?>
+                        <?php } else { ?>
                             <li class="small_post clearfix">
                                 <div class="img_small_post">
                                     <img src="<?php echo base_url($ks->postimagethumb) ?>" alt="<?php echo $ks->title ?>">
@@ -184,7 +182,7 @@
                                     </li>
                                 </ul>
                             </div>
-    <?php } else { ?>
+                        <?php } else { ?>
                             <li class="small_post clearfix">
                                 <div class="img_small_post">
                                     <img src="<?php echo base_url($ks->postimagethumb) ?>" alt="<?php echo $ks->title ?>">
@@ -211,6 +209,6 @@
             <!-- // block_posts block_2 -->
         </div>
     </div><!--End Posts Areaa -->
-<?php $this->load->view('base/sidebar'); ?>
+    <?php $this->load->view('base/sidebar'); ?>
 
 </div><!-- Posts And Sidebar -->
