@@ -46,7 +46,7 @@
                             <div class="custom-dd dd" id="nestable_category">
                                 <ol class="dd-list">
                                     <?php foreach ($category as $pc) { ?>
-                                        <li class="dd-item" data-id="<?php echo $pc->category . ";" . base_url("web/categories/" . $pc->slug) ?>">
+                                        <li class="dd-item" data-id="<?php echo $pc->category . ";" . base_url("web/categories/index/" . $pc->slug) ?>">
                                             <div class="dd-handle">
                                                 <?php echo $pc->category ?>
                                             </div>
