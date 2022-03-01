@@ -29,7 +29,7 @@
                             <div class="custom-dd dd" id="nestable_pages">
                                 <ol class="dd-list">
                                     <?php foreach ($pages as $p) { ?>
-                                        <li class="dd-item" data-id="<?php echo $p->title . ";" . base_url("web/pages/" . $p->slug) ?>">
+                                        <li class="dd-item" data-id="<?php echo $p->title . ";" . base_url("web/pages/index/" . $p->slug) ?>">
                                             <div class="dd-handle">
                                                 <?php echo $p->title ?>
                                             </div>
