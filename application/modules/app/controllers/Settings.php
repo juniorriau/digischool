@@ -51,11 +51,6 @@ class Settings extends MY_Controller {
             $result = fileuploader($_FILES, "filesitehomebg");
             $this->Settings_model->update("site_home_bg", array('setting_value' => $result['message']['fullpath']));
         }
-        if (!empty($_FILES['filesitewebbg']['name'])) {
-            $result = fileuploader($_FILES, "filesitewebbg");
-            $this->Settings_model->update("site_web_bg", array('setting_value' => $result['message']['fullpath']));
-        }
-
         redirect(site_url('app/settings'));
     }
 
