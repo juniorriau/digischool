@@ -29,8 +29,8 @@ class Pages_model extends CI_Model {
     }
 
     //get data by slug
-    function get_by_slug($type, $slug) {
-        $this->db->where('type', $type);
+    function get_by_slug($slug) {
+        $this->db->where('type', $this->type);
         $this->db->where('slug', $slug);
         return $this->db->get($this->table)->row();
     }
