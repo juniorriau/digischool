@@ -11,8 +11,8 @@ class Pages extends MY_Controller {
         $this->load->model("app/Categories_model");
     }
 
-    public function index() {
-        $page = $this->Pages_model->get_by_slug('page', $this->uri->segment(3));
+    public function index($slug) {
+        $page = $this->Pages_model->get_by_slug($slug);
         $category = $this->Categories_model->get_all();
         $recentpost = $this->Posts_model->get_public_post($this->config->item("site_limit_post"));
         $categorycount = $this->Categories_model->get_posts_count();
