@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="card-header">
-                            <h6>Place Category Lists</h6>
+                            <h6>Category Lists</h6>
                         </div>
                         <div class="card-body">
                             <div class="custom-dd dd" id="nestable_category">
