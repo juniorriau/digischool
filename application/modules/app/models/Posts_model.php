@@ -74,10 +74,10 @@ class Posts_model extends CI_Model {
         $this->db->select('p.*, c.category, c.slug as cslug, u.username,ud.fullname,ud.image as userimage');
         $this->db->from('posts p');
         $this->db->join('categories c', 'c.id=p.categoryid', 'left');
-        $this->db->join('users u', 'u.id=c.createdby');
-        $this->db->join('userdetails ud', 'ud.userid=u.id');
+        $this->db->join('users u', 'u.id=p.createdby', 'left');
+        $this->db->join('userdetails ud', 'ud.userid=u.id', 'left');
         $this->db->where('p.type', $this->type);
-        $this->db->order_by($this->id, $this->order);
+        $this->db->order_by('p.id', $this->order);
         $this->db->group_start();
         $this->db->like('p.id', $q);
         $this->db->or_like('p.guuid', $q);
